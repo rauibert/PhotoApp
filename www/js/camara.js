@@ -2,6 +2,7 @@ var app = {
 
     inicio: function(){
         this.iniciaFastClick();
+        this.iniciaBoton();
     },
 
     iniciaFastClick: function(){
@@ -10,24 +11,37 @@ var app = {
 
     iniciaBoton: function(){
         var buttonAction = document.querySelector('#button-action');
-        buttonAction.addEventListener('click', this.tomarFoto);
+        buttonAction.addEventListener('click', function () {
+            app.tomarFoto(Camera.PictureSourceType.CAMERA);
+        });
     },
 
-    tomarFoto: function(){
-        var opciones = {
-            quality: 50,
-            destinationType: Camera.DestinationType.FILE_URI,
-            targetWidth: 300,
-            targetHeight: 300,
-            correctOrientation: true
-        };
-          
-        navigator.Camera.getPicture(app.fotoTomada, app.errorAlTomarFoto, opciones);
+    tomarFoto: function (pictureSourceType) {
+            var opciones = {
+                quality: 90,
+                sourceType: pictureSourceType,
+                destinationType: Camera.DestinationType.DATA_URL,
+                targetWidth: 300,
+                targetHeight: 300,
+                correctOrientation: true
+            };
+            navigator.camera.getPicture(app.fotoTomada, app.errorAlCargarFoto, opciones);
     },
 
     fotoTomada: function(imageURI){
-        var image = document.querySelector('#foto');
-        image.src = imageURI;
+        var img = document.createElement('img');
+        img.onload = function () {
+            app.pintarFoto(img);
+        }
+        img.src = "data:image/jpeg;base64," + imageURI;
+        },
+
+    pintarFoto: function (img) {
+        var canvas = document.querySelector('#foto');
+        var context = canvas.getContext('2d');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        context.drawImage(img, 0, 0, img.width, img.height);
     },
 
     errorAlTomarFoto: function(mensaje){
