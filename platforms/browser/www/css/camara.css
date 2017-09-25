@@ -45,3 +45,16 @@ body{
     border-radius: 10px;
     background-color: #FD4140;
 }
+
+#button-save {
+    font-size: large;
+    border-radius: 10px;
+    background-color: #66E323;
+}
+
+.button-filter {
+    font-size: medium;
+    border-radius: 10px;
+    background-color: #23E3C9;
+    width: 33%;
+}
