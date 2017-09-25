@@ -53,8 +53,7 @@ body{
 }
 
 .button-filter {
-    font-size: medium;
+    font-size: large;
     border-radius: 10px;
-    background-color: #23E3C9;
-    width: 33%;
+    background-color: #23E3C9;    
 }
