@@ -57,3 +57,9 @@ body{
     border-radius: 10px;
     background-color: #23E3C9;    
 }
+
+#button-gallery {
+    font-size: large;
+    border-radius: 10px;
+    background-color: #2326E3;
+}

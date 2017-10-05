@@ -12,7 +12,12 @@ var app = {
     iniciarBotones: function(){
         var buttonAction = document.querySelector('#button-action');
         buttonAction.addEventListener('click', function () {
-            app.tomarFoto(Camera.PictureSourceType.CAMERA);
+            app.cargarFoto(Camera.PictureSourceType.CAMERA);
+        });
+
+        var buttonGallery = document.querySelector('#button-gallery');
+        buttonGallery.addEventListener('click', function () {
+             app.tomarFoto(Camera.PictureSourceType.PHOTOLIBRARY);
         });
 
         var buttonSave = document.querySelector('#button-save');
@@ -30,27 +35,32 @@ var app = {
         filterButtons[2].addEventListener('click', function () {
             app.aplicaFiltro('sepia');
         });
+
+        var buttonGallery = document.querySelector('#button-gallery');
+        buttonGallery.addEventListener('click', function () {
+            app.cargarFoto(Camera.PictureSourceType.PHOTOLIBRARY);
+        });
     },
 
-    tomarFoto: function (pictureSourceType) {
-            var opciones = {
-                quality: 100,
-                sourceType: pictureSourceType,
-                destinationType: Camera.DestinationType.DATA_URL,
-                targetWidth: 300,
-                targetHeight: 300,
-                correctOrientation: true
-            };
-            navigator.camera.getPicture(app.fotoTomada, app.errorAlCargarFoto, opciones);
+    cargarFoto: function (pictureSourceType) {
+       var opciones = {
+           quality: 100,
+           sourceType: pictureSourceType,
+           destinationType: Camera.DestinationType.DATA_URL,
+           targetWidth: 300,
+           targetHeight: 300,
+           correctOrientation: true
+       };
+       navigator.camera.getPicture(app.fotoCargada, app.errorAlCargarFoto, opciones);
     },
 
-    fotoTomada: function(imageURI){
+    fotoCargada: function (imageURI) {
         var img = document.createElement('img');
         img.onload = function () {
             app.pintarFoto(img);
         }
         img.src = "data:image/jpeg;base64," + imageURI;
-        },
+    },
 
     pintarFoto: function (img) {
         var canvas = document.querySelector('#foto');
@@ -60,7 +70,7 @@ var app = {
         context.drawImage(img, 0, 0, img.width, img.height);
     },
 
-    errorAlTomarFoto: function(mensaje){
+    errorAlCargarFoto: function (mensaje) {
         console.log('Fallo al tomar foto o toma cancelada: ' + mensaje);
     },
 
